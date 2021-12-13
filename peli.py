@@ -73,9 +73,7 @@ class Peli:
             self.kulma = (self.kulma + self.pyorimisvauhti) % 360
 
         if self.voimanlisays:
-            self.voima += 1
-            if self.voima > 100:
-                self.voima = 100
+            self.voima = min(self.voima + 1,100)
         
         if self.laukaisu:
             print(f"Pam! {self.voima}")
@@ -88,10 +86,10 @@ class Peli:
         kuva = pygame.transform.rotozoom(self.kuva_pieni, self.kulma, 1)
         laatikko = kuva.get_rect(center=(self.sijainti))
         self.naytto.blit(kuva, laatikko.topleft)
+        pygame.draw.rect(self.naytto, (0, 0, 0), (2, self.korkeus - 19, 102, 17))
+        pygame.draw.rect(self.naytto, (251, 79, 20), (3, self.korkeus - 18, self.voima, 15))
         pygame.display.flip()
         self.kello.tick(60) # 60 FPS (Frames Per Second)
-        # if self.kulma % 100 == 0:
-            # print(self.kello.get_fps())
  
     def lopetus(self):
         pygame.quit()
